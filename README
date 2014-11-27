@@ -1,0 +1,27 @@
+团队名称：野猪也能飞
+队伍编号：team50
+依托单位：中国科学技术大学
+参赛题目：电商消费行为预测
+队员：崔同、王丹、郑立洲
+指导老师：金培权
+
+运行说明：
+	执行：
+		sh /home/team50/doc/siming/script/compile.sh
+	运行完毕之后会在/home/team50/下生成siming.jar，然后再执行：
+		sh /home/team50/doc/siming/script/run.sh
+	即可得到solution_v和solution_t
+    
+	程序各阶段的输出文件均在hdfs上的/user/team50/final 之中
+	solution_v的F-score为0.2675
+	在集群稳定的情况下整个过程可在30分钟内完成	
+    本地运行的时候经过不少于10次测试均可顺利完整地执行整个脚本，如果评委在执行过程中出现问题可以跟我队联系
+
+文件说明：
+    siming/src目录下是源代码
+	siming/bin目录下是编译好的class文件
+	siming/script目录下是编译源代码的脚本和运行程序的脚本
+    siming/lib下是hadoop-core-1.21.jar，在编译源代码的时候使用
+	siming/jar下是一个已经编译好的备用siming.jar。如果compile.sh有问题可以直接将此jar复制到/home/team50/下然后运行run.sh
+	关于每一个class的功能和用法可参考代码说明文档。
+	

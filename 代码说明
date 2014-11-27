@@ -1,0 +1,35 @@
+代码说明:
+整个项目一共包含三个包
+其中de.bwaldvogel.liblinear是liblinear的源代码
+其他两个是我们自己实现的部分，包括：cn.edu.ustc.ct.vectorized和cn.edu.ustc.ct.lr
+vectorized包括Caid.class和Sample.class
+lr包括PredictProb.class和TopID.class
+
+cn.edu.ustc.ct.vectorized.Caid 
+用于对数据集进行预处理，提取特征，转化为libsvm格式的文件。具体用法： 
+	hadoop jar siming.jar cn.edu.ustc.ct.vectorized.Caid <input> <output> 
+	--input：原始数据（train、validation、test）；
+	--output：得到的libsvm格式结果的输出位置。
+	
+cn.edu.ustc.ct.vectorized.Sample
+用于在libsvm格式的总训练集中抽样得到用于建模的训练集，具体用法：
+	hadoop jar siming.jar cn.edu.ustc.ct.vectorized.Sample <transformdata1> <transformdata2> <trainset> <output> <rate>
+	--transformdata1、transformdata2：transform数据集所在的位置，由于该文件共两部分所以设置了两个路径；
+	--trainset：转化为libsvm格式的原始训练集，作为输入；
+	--output：抽样得到的新训练集，作为输出；
+	--rate：int型值，用于设定抽样的正负样本比例，如3表示正：负=1:3。在本次比赛中设定为500。
+	
+cn.edu.ustc.ct.lr.PredictProb
+用于建立逻辑回归的模型和预测结果，在setup阶段读入训练集建模，在map阶段预测，reduce阶段输出结果，具体用法：
+	hadoop jar siming.jar cn.edu.ustc.ct.lr.PredictProb <trainset> <testset> <output> <lr.c>
+	--trainset:训练集；
+	--testset：用于预测的验证集或者测试集；
+	--output：输出结果，结果是mzid排名的形式；
+	--lr.c：用于设定lr模型中参数c的值，为double型，在本次比赛中设定为0.1。
+
+cn.edu.ustc.ct.lr.TopID
+用于生成提交结果
+	hadoop jar siming.jar cn.edu.ustc.ct.lr.TopID <result> <output> <topk>
+	--result：lr模型预测得到的排名结果
+	--output:从排名中选择top k提交
+	--topk：int型，用于指定提交mzid数目，在本次竞赛中设为350。
